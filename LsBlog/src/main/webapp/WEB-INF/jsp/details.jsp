@@ -206,7 +206,7 @@
                     }
 
                 })
-            }
+            }hig
         });
         $().ready(function() {
              $("#articleForm").validate({
