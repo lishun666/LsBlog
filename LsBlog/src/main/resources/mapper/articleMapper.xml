@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：命名空间，用于隔离sql -->
+<!-- 当接口满足四个条件时，不需要实现类
+	1 接口名与namespace相同
+	2 方法名与ID相同
+	3，返回值类型及参数类型与mapper文件中的类型一致
+ -->
+<mapper namespace="cn.ls.dao.ArticleDao">
+   <resultMap type="Article" id="articleResultMap">
+        <id property="articleId" column="article_id" />
+        <result property="articlename" column="article_name"/>
+        <result property="articlecontent" column="articlecontent"/>
+        <association property="articleType" javaType="ArticleType">
+            <id property="typeId" column="type_id"/>
+            <result property="typeName" column="type_name"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllArticle" resultMap="articleResultMap" >
+		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+		FROM article a LEFT JOIN articletype ar
+		ON a.type_id=ar.type_id
+	</select>
+
+    <select id="queryAllArticleByTypeId" resultMap="articleResultMap"  parameterType="Integer">
+		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+		FROM article a LEFT JOIN articletype ar
+		ON a.type_id=ar.type_id
+		Where ar.type_id=#{id}
+	</select>
+
+    <select id="queryArticleById" resultMap="articleResultMap" parameterType="Integer">
+		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+		FROM article a LEFT JOIN articletype ar
+		ON a.type_id=ar.type_id
+		Where a.article_id=#{id}
+	</select>
+	<insert id="addAricle" parameterType="cn.ls.bean.Article">
+		INSERT INTO article(article_name,articlecontent,type_id)
+		VALUES (
+			#{articlename},#{articlecontent},#{typeId}
+		)
+	</insert>
+</mapper>
+
