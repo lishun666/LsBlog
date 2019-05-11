@@ -22,7 +22,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>新增文章</h5>
+                    <h5 id="title">新增文章</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -120,6 +120,8 @@
 <!--统计代码，可删除-->
 <script>
         $(document).ready(function () {
+
+
             $('.summernote').summernote({
                 height: 300,
                 lang: 'zh-CN',
@@ -134,6 +136,27 @@
                     }
                 }
             });
+            if ('${articleId}' != '' ){
+                $("#title").html("修改文章");
+                var articleId = '${articleId}';
+                $.ajax({
+                    data:{articleId:'${articleId}'},
+                    type: "POST",
+                    url: "${_ctx}/article/findArticleById",
+                    headers: {
+                        Accept: "application/json; charset=utf-8"
+                    },
+                    success: function (data) {
+                        debugger;
+                        $("#articleName").val(data.article.articlename);
+                        <%--alert("${article.articleType.typeId}")--%>
+                        $("#selector").val(data.article.articleType.typeId);
+                        var text = data.article.articlecontent;
+                        $('.summernote').summernote('insertText', text);
+                    }
+
+                })
+            }
         })
         //删除图片
         function deleteFile(target) {
@@ -206,7 +229,7 @@
                     }
 
                 })
-            }hig
+            }
         });
         $().ready(function() {
              $("#articleForm").validate({

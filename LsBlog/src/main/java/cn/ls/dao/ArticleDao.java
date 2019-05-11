@@ -14,4 +14,7 @@ public interface ArticleDao {
     public List<Article> findAllArticle();
 
     public void addAricle(Article article);
+
+    public Article findArticleById(Integer articleId);
+
 }

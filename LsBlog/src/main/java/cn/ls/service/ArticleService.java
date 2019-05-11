@@ -18,4 +18,6 @@ public interface ArticleService {
     public void addAricle(Article article);
 
     public String saveImg(HttpServletRequest request, MultipartFile file);
+
+    public Article findArticleById(Integer articleId);
 }

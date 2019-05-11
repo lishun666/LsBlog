@@ -175,7 +175,7 @@
         
             var id = value;
             var result = "";
-            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.typeName +"','" +row.typeId+ "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.articleId +"')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteTypeByIds('" + id + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
             return result;
     }
@@ -184,11 +184,8 @@
         $(location).attr('href', '${_ctx}/article/toDetailsPage');
     })
     //修改类型
-    function EditTypeById(typeName,typeId){
-        $("#title").html("修改文章类型");
-        $("#articleTypeName").val(typeName);
-        $("#typeId").val(typeId);
-        $("#myModal").modal();
+    function EditTypeById(articleId){
+        $(location).attr('href', '${_ctx}/article/toDetailsPage?articleId='+articleId);
     }
     //删除类型
     $("#deleteButton").on("click",function () {

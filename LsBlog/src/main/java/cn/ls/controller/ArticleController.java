@@ -14,11 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @Author: li.shun
@@ -56,9 +54,14 @@ public class ArticleController {
         return map;
     }
     @RequestMapping("toDetailsPage")
-    public String toDetailsPage(Model model){
+    public String toDetailsPage(Model model,String articleId){
         List<ArticleType> typeList = articleTypeService.findAllArticleType();
         model.addAttribute("typeList",typeList);
+        if (articleId != null){
+            Integer id = Integer.parseInt(articleId);
+            //Article article = articleService.findArticleById(id);
+            model.addAttribute("articleId",id);
+        }
         return "details";
     }
     @RequestMapping("addArticle")
@@ -101,5 +104,14 @@ public class ArticleController {
         }
         return null;
 
+    }
+    @RequestMapping("findArticleById")
+    @ResponseBody
+    public Map findArticleById(String articleId){
+        Map map = new HashMap();
+        int id = Integer.parseInt(articleId);
+        Article article = articleService.findArticleById(id);
+        map.put("article",article);
+        return map;
     }
 }

@@ -44,5 +44,10 @@
 			#{articlename},#{articlecontent},#{typeId}
 		)
 	</insert>
+	<select id="findArticleById" parameterType="Integer" resultMap="articleResultMap">
+		SELECT *
+		FROM article
+		WHERE article_id = #{articleId}
+	</select>
 </mapper>
 

@@ -57,4 +57,8 @@ public class ArticleServiceImpl implements ArticleService {
             return null;
         }
     }
+    public Article findArticleById(Integer articleId){
+        Article article = articleDao.findArticleById(articleId);
+        return  article;
+    }
 }
