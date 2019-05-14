@@ -45,6 +45,14 @@ public class ArticleController {
     public String toIndexList(){
         return "articleManage";
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 查询所有文章
+     * @Date 14:08 2019/5/14
+     * @Param []
+     * @return java.util.Map
+     **/
     @RequestMapping("findAllArticle")
     @ResponseBody
     public Map findAllArticle(){
@@ -53,6 +61,14 @@ public class ArticleController {
         map.put("articleList",articleList);
         return map;
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 去文章详情页面
+     * @Date 14:09 2019/5/14
+     * @Param [model, articleId]
+     * @return java.lang.String
+     **/
     @RequestMapping("toDetailsPage")
     public String toDetailsPage(Model model,String articleId){
         List<ArticleType> typeList = articleTypeService.findAllArticleType();
@@ -64,6 +80,14 @@ public class ArticleController {
         }
         return "details";
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 添加文章
+     * @Date 14:09 2019/5/14
+     * @Param [article]
+     * @return java.util.Map
+     **/
     @RequestMapping("addArticle")
     @ResponseBody
     public Map addAricle(Article article){
@@ -77,11 +101,19 @@ public class ArticleController {
         }
         return map;
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 保存图片
+     * @Date 14:09 2019/5/14
+     * @Param [request, file]
+     * @return java.util.Map
+     **/
     @RequestMapping(value = "uploadImgs",headers = "Accept=application/json",produces ="application/json;charset=UTF-8")
     @ResponseBody
     public Map uploadImgs(HttpServletRequest request, MultipartFile file){
         Map map = new HashMap(4);
-        String imgPath =   articleService.saveImg(request,file);
+        String imgPath =  articleService.saveImg(request,file);
         if(imgPath != null){
             map.put("imgPath",imgPath);
             map.put("status",1);
@@ -90,6 +122,14 @@ public class ArticleController {
         }
         return map;
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 删除图片
+     * @Date 14:10 2019/5/14
+     * @Param [request, imgSrc]
+     * @return java.util.Map
+     **/
     @RequestMapping(value = "deleteImg",headers = "Accept=application/json",produces ="application/json;charset=UTF-8")
     @ResponseBody
     public Map deleteImg(HttpServletRequest request, String imgSrc){
@@ -105,6 +145,14 @@ public class ArticleController {
         return null;
 
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //根据id获取文章
+     * @Date 14:07 2019/5/14
+     * @Param [articleId]
+     * @return java.util.Map
+     **/
     @RequestMapping("findArticleById")
     @ResponseBody
     public Map findArticleById(String articleId){
@@ -112,6 +160,19 @@ public class ArticleController {
         int id = Integer.parseInt(articleId);
         Article article = articleService.findArticleById(id);
         map.put("article",article);
+        return map;
+    }
+    @RequestMapping("editArticle")
+    @ResponseBody
+    public Map editArticleById(Article article){
+        Map map = new HashMap();
+        try {
+            articleService.editArticleById(article);
+            map.put("status",1);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("status",0);
+        }
         return map;
     }
 }

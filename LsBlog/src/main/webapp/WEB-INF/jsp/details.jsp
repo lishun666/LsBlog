@@ -83,8 +83,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content no-padding">
-                                <div class="summernote">
-                                </div>
+                                <div class="summernote"> </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -113,15 +112,13 @@
 
 <script type="text/javascript"  src="${_ctx}/static/js/demo/form-validate-demo.js"></script>
 
-
+    <script type="text/javascript" src=${_ctx}/static/js/dist/jquery.validate.js"></script>
 <script type="text/javascript" src="${_ctx}/static/js/plugins/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="${_ctx}/static/js/plugins/summernote/summernote-zh-CN.js"></script>
-    <script type="text/javascript" src=${_ctx}/static/js/dist/jquery.validate.js"></script>
+
 <!--统计代码，可删除-->
 <script>
         $(document).ready(function () {
-
-
             $('.summernote').summernote({
                 height: 300,
                 lang: 'zh-CN',
@@ -136,11 +133,16 @@
                     }
                 }
             });
-            if ('${articleId}' != '' ){
+            if ("${articleId}" != '' ){
+                UpdateArticle(${articleId});
+            }
+        })
+        //初始化修改页面
+        function UpdateArticle(id) {
                 $("#title").html("修改文章");
-                var articleId = '${articleId}';
+                var articleId = id;
                 $.ajax({
-                    data:{articleId:'${articleId}'},
+                    data:{articleId: id },
                     type: "POST",
                     url: "${_ctx}/article/findArticleById",
                     headers: {
@@ -149,18 +151,14 @@
                     success: function (data) {
                         debugger;
                         $("#articleName").val(data.article.articlename);
-                        <%--alert("${article.articleType.typeId}")--%>
                         $("#selector").val(data.article.articleType.typeId);
                         var text = data.article.articlecontent;
-                        $('.summernote').summernote('insertText', text);
+                        $('.summernote').summernote('code', text);
                     }
-
                 })
-            }
-        })
+        }
         //删除图片
         function deleteFile(target) {
-            debugger;
             var imgSrc = target.context.currentSrc;
             var data = new FormData();
             data.append("imgSrc", imgSrc);
@@ -208,29 +206,54 @@
         };
         var save = function () {
             $("#eg").removeClass("no-padding");
-            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            var aHTML = $('.click2edit').code();
             $('.click2edit').destroy();
         };
 
         $.validator.setDefaults({
             submitHandler: function() {
+                var articleId = '${articleId}';
                 var articlename = $("#articleName").val();
                 var typeId = $("#selector").val();
                 var articlecontent = $('.note-editable').html();
-                $.ajax({
-                    type:"post",
-                    data:{"articlename":articlename,"typeId":typeId,"articlecontent": articlecontent},
-                    url:"${_ctx}/article/addArticle",
-                    success:function(data) {
-                        if (data.status == 1) {
-                            alert("添加成功");
-                            $(window).attr("location","${_ctx}/article/toList");
-                        } else alert("请求失败")
-                    }
+                if (articleId == '') {
+                    addSubmit(articlename,typeId,articlecontent);
+                }else {
+                    editSubmit(articleId,articlename,typeId,articlecontent);
+                }
 
-                })
             }
         });
+        //添加文章提交
+        function addSubmit(articlename,typeId,articlecontent){
+            $.ajax({
+                type:"post",
+                data:{"articlename":articlename,"typeId":typeId,"articlecontent": articlecontent},
+                url:"${_ctx}/article/addArticle",
+                success:function(data) {
+                    if (data.status == 1) {
+                        alert("添加成功");
+                        $(window).attr("location","${_ctx}/article/toList");
+                    } else alert("请求失败")
+                }
+            })
+        }
+        //修改文章提交
+        function editSubmit(articleId,articlename,typeId,articlecontent){
+            $.ajax({
+                type:"post",
+                data:{"articleId":articleId,"articlename":articlename,"typeId":typeId,"articlecontent": articlecontent},
+                url:"${_ctx}/article/editArticle",
+                success:function(data) {
+                    if (data.status == 1) {
+                        alert("修改成功");
+                        $(window).attr("location","${_ctx}/article/toList");
+                    } else alert("请求失败")
+                }
+            })
+        }
+
+        //表单校验
         $().ready(function() {
              $("#articleForm").validate({
                  rules:{

@@ -44,10 +44,20 @@
 			#{articlename},#{articlecontent},#{typeId}
 		)
 	</insert>
+
+
 	<select id="findArticleById" parameterType="Integer" resultMap="articleResultMap">
 		SELECT *
 		FROM article
 		WHERE article_id = #{articleId}
 	</select>
+
+	<update id="editArticleById" parameterType="cn.ls.bean.Article">
+        UPDATE article
+        SET article_name=#{articlename},articlecontent = #{articlecontent},type_id=#{typeId}
+        WHERE article_id=#{articleId}
+    </update>
+
+
 </mapper>
 

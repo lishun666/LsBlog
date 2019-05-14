@@ -24,15 +24,37 @@ import java.util.UUID;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleDao articleDao;
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 查找所有文章
+     * @Date 14:24 2019/5/14
+     * @Param []
+     * @return java.util.List<cn.ls.bean.Article>
+     **/
     public List<Article> findAllArticle(){
         List<Article> articleList = articleDao.findAllArticle();
         return articleList;
     }
-    //保存文章
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 保存文章
+     * @Date 14:25 2019/5/14
+     * @Param [article]
+     * @return void
+     **/
     public void addAricle(Article article){
         articleDao.addAricle(article);
     }
-    //保存图片
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 保存图片
+     * @Date 14:25 2019/5/14
+     * @Param [request, file]
+     * @return java.lang.String
+     **/
     public String saveImg(HttpServletRequest request, MultipartFile file){
         //使用UUID给图片重命名，并去掉四个“-”
         String name = UUID.randomUUID().toString().replaceAll("-", "");
@@ -57,8 +79,28 @@ public class ArticleServiceImpl implements ArticleService {
             return null;
         }
     }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 根据id查询文章
+     * @Date 14:25 2019/5/14
+     * @Param [articleId]
+     * @return cn.ls.bean.Article
+     **/
     public Article findArticleById(Integer articleId){
         Article article = articleDao.findArticleById(articleId);
         return  article;
+    }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 根据id修改文章
+     * @Date 14:26 2019/5/14
+     * @Param [article]
+     * @return void
+     **/
+    @Override
+    public void editArticleById(Article article) {
+        articleDao.editArticleById(article);
     }
 }

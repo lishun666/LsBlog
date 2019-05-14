@@ -17,4 +17,5 @@ public interface ArticleDao {
 
     public Article findArticleById(Integer articleId);
 
+    public void editArticleById(Article article);
 }

@@ -20,4 +20,6 @@ public interface ArticleService {
     public String saveImg(HttpServletRequest request, MultipartFile file);
 
     public Article findArticleById(Integer articleId);
+
+    public void editArticleById(Article article);
 }
