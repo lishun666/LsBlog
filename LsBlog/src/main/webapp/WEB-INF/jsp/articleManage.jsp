@@ -19,6 +19,7 @@
     <link href="${_ctx}/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <link href="${_ctx}/static/css/animate.css" rel="stylesheet">
     <link href="${_ctx}/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${_ctx}/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
 
 </head>
@@ -66,6 +67,7 @@
 <script src="${_ctx}/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="${_ctx}/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="${_ctx}/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="${_ctx}/static/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!-- Peity -->
 <%--<script src="${_ctx}/static/js/demo/bootstrap-table-demo.js"></script>--%>
@@ -132,27 +134,11 @@
                 },
                 columns: [
                     {checkbox: true },
-                /*    {
-                        title: '序号',
-                        field: '',
-                        align: 'center',
-                        formatter: function (value, row, index) {
-                            var pageSize = $('#exampleTableEvents').bootstrapTable('getOptions').pageSize;     //通过table的#id 得到每页多少条
-                            var pageNumber = $('#exampleTableEvents').bootstrapTable('getOptions').pageNumber; //通过table的#id 得到当前第几页
-                            return pageSize * (pageNumber - 1) + index + 1;    // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
-                        }
-                    },*/
                     {title:'文章编号',field: 'articleId',sortable:true ,align:"center" },
 
                     {title:'文章名字',align:"center",align:"center",field: 'articlename'},
                     {title:'文章类型',align:"center",align:"center",field: 'articleType.typeName'},
                     {title:'操作',field:"Button",align:"center",formatter:buttonFormatter,
-                    /*    formatter:function (value, row, index) {
-                            return [
-                                '<i class="fa fa-edit editButton" style="cursor: pointer;" ></i>'
-                            ].join("")
-
-                        },events:operateEvents*/
                     }
                 ],
             });
@@ -176,7 +162,7 @@
             var id = value;
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.articleId +"')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteTypeByIds('" + id + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteOneArticle('" + row.articleId + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
             return result;
     }
     //新增类型
@@ -189,35 +175,72 @@
     }
     //删除类型
     $("#deleteButton").on("click",function () {
-        var rows = $("#exampleTableToolbar").bootstrapTable('getSelections');
-        console.log(rows);
+    //$('#deleteButton').click(function () {
+        swal({
+            title: "您确定要删除这条信息吗",
+            text: "删除后将无法恢复，请谨慎操作！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除",
+            closeOnConfirm: false
+        }, function () {
+            deleteAritlce();
+            swal("删除成功！", "您已经永久删除了这条信息。", "success");
+        });
+
+    })
+    function deleteAritlce() {
+        var rows = $("#articleTableToolbar").bootstrapTable('getSelections');
         if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
             alert("请先选择要删除的记录!");
             return;
         }else {
             var arrays = new Array();// 声明一个数组
             $(rows).each(function () {// 通过获得别选中的来进行遍历
-                arrays.push(this.typeId);// cid为获得到的整条数据中的一列
+                arrays.push(this.articleId);// cid为获得到的整条数据中的一列
             });
             var idcard = arrays.join(','); // 获得要删除的id
             $.ajax({
                 type:"post",
-                 url: "${_ctx}/articleType/deleteArticleTypeByIds",
+                url: "${_ctx}/article/deleteArticleByIds",
                 data:{"idcard":idcard},
                 success:function(data){
                     if(data.status == 1){
-                        alert("删除成功");
-                        $("#myModal").modal('hide');
-                        $('#exampleTableToolbar').bootstrapTable(('refresh'));
+                        $('#articleTableToolbar').bootstrapTable(('refresh'));
                     }else alert("请求失败")
 
                 }
-
-
             })
         }
-    })
-
+    }
+    //删除单篇文章
+    function DeleteOneArticle(articleId) {
+        swal({
+            title: "您确定要删除这条信息吗",
+            text: "删除后将无法恢复，请谨慎操作！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除",
+            closeOnConfirm: false
+        }, function () {
+            deleteOne(articleId);
+            swal("删除成功！", "您已经永久删除了这条信息。", "success");
+        });
+    }
+    function deleteOne(articleId) {
+        $.ajax({
+            data:{'articleId':articleId},
+            type:'post',
+            url:"${_ctx}/article/deleteOneArticle",
+            success:function(data){
+                if(data.status == 1){
+                    $('#articleTableToolbar').bootstrapTable(('refresh'));
+                }else alert("请求失败")
+            }
+        })
+    }
 </script>
 
 </body>

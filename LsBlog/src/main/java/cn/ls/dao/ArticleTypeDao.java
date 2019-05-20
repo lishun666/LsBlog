@@ -19,4 +19,6 @@ public interface ArticleTypeDao {
     public void editArticleType(ArticleType articleType);
     //删除文章类型
     public void deleteArticleTypeByIds(Integer[] idcard);
+    //删除单个文章类型
+    public void deleteOneType(Integer typeId);
 }

@@ -4,7 +4,6 @@ import cn.ls.bean.Article;
 import cn.ls.bean.ArticleType;
 import cn.ls.service.ArticleService;
 import cn.ls.service.ArticleTypeService;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +34,6 @@ public class ArticleController {
     private ArticleTypeService articleTypeService;
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 去文章管理首页首页的方法
      * @Date 12:49 2019/4/21
      * @Param []
@@ -47,7 +45,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 查询所有文章
      * @Date 14:08 2019/5/14
      * @Param []
@@ -63,7 +60,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 去文章详情页面
      * @Date 14:09 2019/5/14
      * @Param [model, articleId]
@@ -82,7 +78,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 添加文章
      * @Date 14:09 2019/5/14
      * @Param [article]
@@ -103,7 +98,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 保存图片
      * @Date 14:09 2019/5/14
      * @Param [request, file]
@@ -124,7 +118,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 删除图片
      * @Date 14:10 2019/5/14
      * @Param [request, imgSrc]
@@ -147,7 +140,6 @@ public class ArticleController {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //根据id获取文章
      * @Date 14:07 2019/5/14
      * @Param [articleId]
@@ -162,6 +154,13 @@ public class ArticleController {
         map.put("article",article);
         return map;
     }
+    /*
+    *
+     * @Description //TODO 修改文章
+     * @Date 15:14 2019/5/14
+     * @Param [article]
+     * @return java.util.Map
+     **/
     @RequestMapping("editArticle")
     @ResponseBody
     public Map editArticleById(Article article){
@@ -175,4 +174,42 @@ public class ArticleController {
         }
         return map;
     }
+    /*
+    *
+     * @Description //TODO 删除文章方法
+     * @Date 13:48 2019/5/20
+     * @Param [idcard]
+     * @return java.util.Map
+     **/
+    @RequestMapping("deleteArticleByIds")
+    @ResponseBody
+    public Map deleteArticleById(Integer[] idcard){
+        Map map = new HashMap();
+        try {
+            articleService.deleteArticleById(idcard);
+            map.put("status",1);
+        }catch (Exception e){
+            map.put("status",1);
+        }
+        return map;
+    }
+    /*
+     * @Description //TODO 删除单挑文章
+     * @Date 14:48 2019/5/20
+     * @Param [articleId]
+     * @return java.util.Map
+     **/
+    @RequestMapping("deleteOneArticle")
+    @ResponseBody
+    public Map deleteOneArticle(Integer articleId){
+        Map map = new HashMap();
+        try {
+            articleService.deleteOneArticle(articleId);
+            map.put("status",1);
+        }catch (Exception e){
+            map.put("status",1);
+        }
+        return map;
+    }
+
 }

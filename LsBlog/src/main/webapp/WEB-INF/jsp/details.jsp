@@ -15,6 +15,7 @@
     <link href="${_ctx}/static/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="${_ctx}/static/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
     <link href="${_ctx}/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${_ctx}/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -89,6 +90,8 @@
                         <div class="form-group">
                             <div class="col-sm-5 col-sm-offset-3">
                                 <button class="btn btn-primary"  id="submitbutton">提交</button>
+                                <button class="btn btn-white" type="submit" id="exitbutton">取消</button>
+<%--                                <button class="btn btn-primary"  >取消</button>--%>
                             </div>
                         </div>
                     </form>
@@ -111,10 +114,10 @@
 <script type="text/javascript" src="${_ctx}/static/js/plugins/validate/messages_zh.min.js"></script>
 
 <script type="text/javascript"  src="${_ctx}/static/js/demo/form-validate-demo.js"></script>
-
-    <script type="text/javascript" src=${_ctx}/static/js/dist/jquery.validate.js"></script>
+<script type="text/javascript" src=${_ctx}/static/js/dist/jquery.validate.js"></script>
 <script type="text/javascript" src="${_ctx}/static/js/plugins/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="${_ctx}/static/js/plugins/summernote/summernote-zh-CN.js"></script>
+<script src="${_ctx}/static/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!--统计代码，可删除-->
 <script>
@@ -140,7 +143,6 @@
         //初始化修改页面
         function UpdateArticle(id) {
                 $("#title").html("修改文章");
-                var articleId = id;
                 $.ajax({
                     data:{articleId: id },
                     type: "POST",
@@ -149,7 +151,6 @@
                         Accept: "application/json; charset=utf-8"
                     },
                     success: function (data) {
-                        debugger;
                         $("#articleName").val(data.article.articlename);
                         $("#selector").val(data.article.articleType.typeId);
                         var text = data.article.articlecontent;
@@ -210,20 +211,21 @@
             $('.click2edit').destroy();
         };
 
-        $.validator.setDefaults({
-            submitHandler: function() {
-                var articleId = '${articleId}';
-                var articlename = $("#articleName").val();
-                var typeId = $("#selector").val();
-                var articlecontent = $('.note-editable').html();
-                if (articleId == '') {
-                    addSubmit(articlename,typeId,articlecontent);
-                }else {
-                    editSubmit(articleId,articlename,typeId,articlecontent);
+            $.validator.setDefaults({
+                submitHandler: function() {
+                    var articleId = '${articleId}';
+                    var articlename = $("#articleName").val();
+                    var typeId = $("#selector").val();
+                    var articlecontent = $('.note-editable').html();
+                    if (articleId == '') {
+                        addSubmit(articlename,typeId,articlecontent);
+                    }else {
+                        editSubmit(articleId,articlename,typeId,articlecontent);
+                    }
                 }
+            });
 
-            }
-        });
+
         //添加文章提交
         function addSubmit(articlename,typeId,articlecontent){
             $.ajax({
@@ -252,7 +254,23 @@
                 }
             })
         }
-
+        /*function validform(){
+            return $('#articleForm').validate({
+                rules:{
+                    articlename:"required"
+                },
+                messages:{
+                    articlename:"请输入文章名"
+                }
+            })
+            $(validform());
+            $("#btn").click(function(){
+                if(validform().form()) {
+                    //通过表单验证，以下编写自己的代码
+                } else {
+                    //校验不通过，什么都不用做，校验信息已经正常显示在表单上
+                }
+        }*/
         //表单校验
         $().ready(function() {
              $("#articleForm").validate({
@@ -265,6 +283,23 @@
              });
 
         });
+            $('#exitbutton').on("click",function(){
+                swal({
+                    title: "是否确认退出",
+                    text: "退出后您的编辑内容将不会保存",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "退出",
+                    closeOnConfirm: false
+                }, function () {
+                    $(window).attr("location","${_ctx}/article/toList");
+                    //swal("删除成功！", "您已经永久删除了这条信息。", "success");
+                });
+            })
+
+
+
 </script>
 
 </body>

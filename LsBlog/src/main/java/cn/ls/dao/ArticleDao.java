@@ -18,4 +18,8 @@ public interface ArticleDao {
     public Article findArticleById(Integer articleId);
 
     public void editArticleById(Article article);
+
+    public void deleteArticleById(Integer[] idcard);
+
+    public void deleteOneArticle(Integer articleId);
 }

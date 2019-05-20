@@ -33,4 +33,8 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     public void deleteArticleTypeByIds(Integer[] idcard){
         articleTypeDao.deleteArticleTypeByIds(idcard);
     }
+    //删除单个文章类型
+    public void deleteOneType(Integer typeId){
+        articleTypeDao.deleteOneType(typeId);
+    }
 }

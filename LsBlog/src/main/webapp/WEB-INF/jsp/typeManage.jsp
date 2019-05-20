@@ -19,6 +19,8 @@
     <link href="${_ctx}/static/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <link href="${_ctx}/static/css/animate.css" rel="stylesheet">
     <link href="${_ctx}/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${_ctx}/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
 
 
 </head>
@@ -34,55 +36,14 @@
                         <h4 class="example-title">文章类型管理</h4>
                         <div class="example">
                             <div class="btn-group hidden-xs" id="exampleToolbar" role="group">
-                                <%--<button type="button" class="btn btn-outline btn-default">
-                                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                                </button>--%>
                                 <button type="button" class="btn btn-outline btn-default"  id="addButton">
                                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                                 </button>
-                               <%-- <button type="button" class="btn btn-outline btn-default" data-toggle="modal">
-                                    <i class="glyphicon glyphicon-heart"  aria-hidden="true"></i>
-                                </button>--%>
                                 <button type="button" class="btn btn-outline btn-default" data-toggle="modal" id="deleteButton" >
                                     <i class="glyphicon glyphicon-trash " aria-hidden="true"></i>
                                 </button>
                             </div>
                             <table id="exampleTableToolbar" data-mobile-responsive="true">
-                              <%--  <thead>
-                                    <tr>
-                                        <th class="bs-checkbox " style="width: 20px; " data-field="state" tabindex="0">
-                                            <div class="th-inner "></div>
-                                            <div class="fht-cell"></div>
-                                        </th>
-                                        <th data-field="typeId">类型ID</th>
-                                        <th data-field="name">类型名字</th>
-                                        <th data-field="operation">操作</th>
-                                    </tr>
-                                </thead>--%>
-                             <%--   <tbody>
-                                <c:forEach items="${typeList}" var="type">
-                                    <tr>
-                                        <td class="bs-checkbox">
-                                            <input data-index="0" name="btSelectItem" type="radio" checked="checked">
-                                        </td>
-                                        <td>${type.typeId}</td>
-                                        <td>${type.typeName}</td>
-                                        <td>
-                                            <div class="btn-group hidden-xs"  role="group">
-                                                <button type="button"  class="btn btn-outline btn-default"  >
-                                                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button"  class="btn btn-outline btn-default">
-                                                    <i class="glyphicon glyphicon-heart"  aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-outline btn-default" >
-                                                    <i class="glyphicon glyphicon-trash " aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>--%>
                             </table>
                         </div>
                     </div>
@@ -127,9 +88,8 @@
 <script src="${_ctx}/static/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="${_ctx}/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="${_ctx}/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="${_ctx}/static/js/plugins/sweetalert/sweetalert.min.js"></script>
 
-<!-- Peity -->
-<%--<script src="${_ctx}/static/js/demo/bootstrap-table-demo.js"></script>--%>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 <!--统计代码，可删除-->
 
@@ -193,31 +153,9 @@
                 },
                 columns: [
                     {checkbox: true },
-                /*    {
-                        title: '序号',
-                        field: '',
-                        align: 'center',
-                        formatter: function (value, row, index) {
-                            var pageSize = $('#exampleTableEvents').bootstrapTable('getOptions').pageSize;     //通过table的#id 得到每页多少条
-                            var pageNumber = $('#exampleTableEvents').bootstrapTable('getOptions').pageNumber; //通过table的#id 得到当前第几页
-                            return pageSize * (pageNumber - 1) + index + 1;    // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
-                        }
-                    },*/
-
                     {title:'类型编号',field: 'typeId',sortable:true ,align:"center" },
-                    // {title:'价格',field: 'money',align:"center",sortable:true ,formatter: function (value, row, index) {
-                    //   var price = parseInt(value)/100
-                    //   return price;
-                    // }
-                    // },
                     {title:'类型名字',align:"center",align:"center",field: 'typeName'},
                     {title:'操作',field:"Button",align:"center",formatter:buttonFormatter,
-                    /*    formatter:function (value, row, index) {
-                            return [
-                                '<i class="fa fa-edit editButton" style="cursor: pointer;" ></i>'
-                            ].join("")
-
-                        },events:operateEvents*/
                     }
                 ],
             });
@@ -241,7 +179,7 @@
             var id = value;
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.typeName +"','" +row.typeId+ "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteTypeByIds('" + id + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteTypeById('" + row.typeId + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
             return result;
     }
     //新增类型
@@ -259,8 +197,22 @@
     }
     //删除类型
     $("#deleteButton").on("click",function () {
+        swal({
+            title: "您确定要删除这些吗",
+            text: "删除后将无法恢复，请谨慎操作！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除",
+            closeOnConfirm: false
+        }, function () {
+            deleteType();
+            swal("删除成功！", "您已经永久删除了这条信息。", "success");
+        });
+    })
+
+    function deleteType(){
         var rows = $("#exampleTableToolbar").bootstrapTable('getSelections');
-        console.log(rows);
         if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
             alert("请先选择要删除的记录!");
             return;
@@ -272,21 +224,17 @@
             var idcard = arrays.join(','); // 获得要删除的id
             $.ajax({
                 type:"post",
-                 url: "${_ctx}/articleType/deleteArticleTypeByIds",
+                url: "${_ctx}/articleType/deleteArticleTypeByIds",
                 data:{"idcard":idcard},
                 success:function(data){
                     if(data.status == 1){
-                        alert("删除成功");
                         $("#myModal").modal('hide');
                         $('#exampleTableToolbar').bootstrapTable(('refresh'));
                     }else alert("请求失败")
-
                 }
-
-
             })
         }
-    })
+    }
 
     //提交按钮
     $("#submitArticleType").on("click",function(){
@@ -322,17 +270,38 @@
                         $("#myModal").modal('hide');
                         $('#exampleTableToolbar').bootstrapTable(('refresh'));
                     }else alert("请求失败")
-
                 }
-
             })
-
         }
-
-
-
     })
+    //单个删除
+    function DeleteTypeById(typeId) {
+        swal({
+            title: "您确定要删除此类型吗",
+            text: "删除后将无法恢复，请谨慎操作！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除",
+            closeOnConfirm: false
+        }, function () {
+            debugger;
+            deleteOne(typeId);
+            swal("删除成功！", "您已经永久删除了这条信息。", "success");
+        });
+    }
+    function deleteOne(typeId) {
+        $.ajax({
+            data:{'typeId':typeId},
+            type:'post',
+            url:"${_ctx}/articleType/deleteOneType",
+            success:function(data){
+                if(data.status == 1){
+                    $('#exampleTableToolbar').bootstrapTable(('refresh'));
+                }else alert("请求失败")
+            }
+        })
+    }
 </script>
-
 </body>
 </html>

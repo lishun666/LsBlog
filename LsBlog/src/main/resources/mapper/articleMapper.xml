@@ -57,6 +57,19 @@
         SET article_name=#{articlename},articlecontent = #{articlecontent},type_id=#{typeId}
         WHERE article_id=#{articleId}
     </update>
+    <delete id="deleteArticleById" parameterType="Integer">
+        delete
+        from article
+        where article_id in
+        <foreach collection="array" item="articleId" open="(" close=")" separator=",">
+            #{articleId}
+        </foreach>
+    </delete>
+    <delete id="deleteOneArticle" parameterType="Integer">
+        delete
+        form article
+        where article_id = #{articleId}
+    </delete>
 
 
 </mapper>

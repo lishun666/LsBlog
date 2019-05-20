@@ -114,4 +114,17 @@ public class ArticleTypeController {
         }
         return map;
     }
+    @RequestMapping("deleteOneType")
+    @ResponseBody
+    public Map deleteOneType(Integer typeId){
+        Map map = new HashMap();
+        try{
+            articleTypeService.deleteOneType(typeId);
+            map.put("status",1);
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("status",0);
+        }
+        return map;
+    }
 }

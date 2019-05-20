@@ -26,7 +26,6 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 查找所有文章
      * @Date 14:24 2019/5/14
      * @Param []
@@ -38,7 +37,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 保存文章
      * @Date 14:25 2019/5/14
      * @Param [article]
@@ -49,7 +47,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 保存图片
      * @Date 14:25 2019/5/14
      * @Param [request, file]
@@ -81,7 +78,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 根据id查询文章
      * @Date 14:25 2019/5/14
      * @Param [articleId]
@@ -93,7 +89,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
     /*
     *
-     * @Author chengpunan
      * @Description //TODO 根据id修改文章
      * @Date 14:26 2019/5/14
      * @Param [article]
@@ -103,4 +98,26 @@ public class ArticleServiceImpl implements ArticleService {
     public void editArticleById(Article article) {
         articleDao.editArticleById(article);
     }
+    /*
+    *
+     * @Description //TODO 删除文章的方法
+     * @Date 13:44 2019/5/20
+     * @Param [idcard]
+     * @return void
+     **/
+    public void deleteArticleById(Integer[] idcard){
+        articleDao.deleteArticleById(idcard);
+    }
+    /*
+    *
+     * @Author chengpunan
+     * @Description //TODO 删除单篇文章
+     * @Date 14:49 2019/5/20
+     * @Param [articleId]
+     * @return void
+     **/
+    public void deleteOneArticle(Integer articleId){
+        articleDao.deleteOneArticle(articleId);
+    }
+
 }
