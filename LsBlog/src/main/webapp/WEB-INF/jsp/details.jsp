@@ -90,7 +90,7 @@
                         <div class="form-group">
                             <div class="col-sm-5 col-sm-offset-3">
                                 <button class="btn btn-primary"  id="submitbutton">提交</button>
-                                <button class="btn btn-white" type="submit" id="exitbutton">取消</button>
+                                <div class="btn btn-white" id="exitbutton">取消</div>
 <%--                                <button class="btn btn-primary"  >取消</button>--%>
                             </div>
                         </div>
@@ -155,6 +155,7 @@
                         $("#selector").val(data.article.articleType.typeId);
                         var text = data.article.articlecontent;
                         $('.summernote').summernote('code', text);
+                        $.ARTICLECONTENT = data.article.articlecontent;
                     }
                 })
         }
@@ -220,9 +221,23 @@
                     if (articleId == '') {
                         addSubmit(articlename,typeId,articlecontent);
                     }else {
-                        editSubmit(articleId,articlename,typeId,articlecontent);
+                        if( $.ARTICLECONTENT == articlecontent){
+                            swal({
+                                title: "文章未做任何修改",
+                                text: "此次未做认和修改，是否返回文章列表页面",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "返回",
+                                closeOnConfirm: false
+                            }, function () {
+                                $(window).attr("location","${_ctx}/article/toList");
+                            });
+                        }else {
+                            editSubmit(articleId,articlename,typeId,articlecontent);
+                        }
                     }
-                }
+                    }
             });
 
 
@@ -254,23 +269,6 @@
                 }
             })
         }
-        /*function validform(){
-            return $('#articleForm').validate({
-                rules:{
-                    articlename:"required"
-                },
-                messages:{
-                    articlename:"请输入文章名"
-                }
-            })
-            $(validform());
-            $("#btn").click(function(){
-                if(validform().form()) {
-                    //通过表单验证，以下编写自己的代码
-                } else {
-                    //校验不通过，什么都不用做，校验信息已经正常显示在表单上
-                }
-        }*/
         //表单校验
         $().ready(function() {
              $("#articleForm").validate({
@@ -297,9 +295,6 @@
                     //swal("删除成功！", "您已经永久删除了这条信息。", "success");
                 });
             })
-
-
-
 </script>
 
 </body>

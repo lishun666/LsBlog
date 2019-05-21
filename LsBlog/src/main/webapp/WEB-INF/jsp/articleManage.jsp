@@ -20,6 +20,7 @@
     <link href="${_ctx}/static/css/animate.css" rel="stylesheet">
     <link href="${_ctx}/static/css/style.css?v=4.1.0" rel="stylesheet">
     <link href="${_ctx}/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="${_ctx}/staticcss/plugins/switchery/switchery.css" rel="stylesheet">
 
 
 </head>
@@ -68,6 +69,9 @@
 <script src="${_ctx}/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="${_ctx}/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="${_ctx}/static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- Switchery -->
+<script src="${_ctx}/static/js/plugins/switchery/switchery.js"></script>
+
 
 <!-- Peity -->
 <%--<script src="${_ctx}/static/js/demo/bootstrap-table-demo.js"></script>--%>
@@ -138,6 +142,7 @@
 
                     {title:'文章名字',align:"center",align:"center",field: 'articlename'},
                     {title:'文章类型',align:"center",align:"center",field: 'articleType.typeName'},
+                    {title:'是否显示',type:"checkbox",class:"js-switch" },
                     {title:'操作',field:"Button",align:"center",formatter:buttonFormatter,
                     }
                 ],
