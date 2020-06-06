@@ -62,6 +62,19 @@
                             <a class="J_menuItem" href="${pageContext.request.contextPath}/article/toList">文章管理</a>
                         </li>
                     </ul>
+                    <a href="#">
+                        <i class="fa fa-picture-o"></i>
+                        <span class="nav-label">相册管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a class="J_menuItem" href="#">相册管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="#">相片管理</a>
+                        </li>
+                    </ul>
                 </li>
                 <%--<li>
                     <a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">相册</span><span class="fa arrow"></span></a>

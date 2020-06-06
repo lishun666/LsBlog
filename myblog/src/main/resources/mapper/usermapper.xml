@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shunshun.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.shunshun.domain.User">
+        <id column="userid"  property="userId" />
+        <result column="username"  property="userName" />
+        <result column="password" property="passWord" />
+    </resultMap>
+
+    <select id="getUser" resultType="BaseResultMap" parameterType="java.lang.String">
+        select * from user where userName = #{userName}
+    </select>
+</mapper>
