@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date: 2020/5/31 17:00
  * @Version: 1.0
  */
-@MapperScan("com.shunshun.mapper")
+@MapperScan("com.database.dao")
 @SpringBootApplication
 public class BlogApplication {
     public static void main(String[] args) {

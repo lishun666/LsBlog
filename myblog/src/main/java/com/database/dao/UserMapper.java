@@ -1,7 +1,6 @@
-package com.shunshun.mapper;
+package com.database.dao;
 
-import com.shunshun.domain.User;
-import org.apache.ibatis.annotations.Mapper;
+import com.database.domain.User;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,8 +9,10 @@ import org.apache.ibatis.annotations.Param;
  * @Date: 2020/5/31 17:20
  * @Version: 1.0
  */
-@Mapper
 public interface UserMapper {
 
     User getUser(@Param("userName") String userName);
+
+    Integer insertUser(@Param("user") User user);
+
 }

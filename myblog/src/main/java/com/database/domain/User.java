@@ -1,4 +1,4 @@
-package com.shunshun.domain;
+package com.database.domain;
 
 /**
  * @Author: li.shun

@@ -1,13 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shunshun.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.shunshun.domain.User">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.dao.UserMapper">
+
+    <resultMap id="baseResultMap" type="com.database.domain.User">
         <id column="userid"  property="userId" />
         <result column="username"  property="userName" />
         <result column="password" property="passWord" />
     </resultMap>
 
-    <select id="getUser" resultType="BaseResultMap" parameterType="java.lang.String">
+    <select id = "getUser" resultMap = "baseResultMap" >
         select * from user where userName = #{userName}
     </select>
+
+    <insert id="insertUser" parameterType="com.database.domain.User">
+        insert into user(username,password)
+        values (#{user.userName},#{user.passWord})
+    </insert>
 </mapper>

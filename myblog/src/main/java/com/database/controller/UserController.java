@@ -1,9 +1,9 @@
-package com.shunshun.controller;
+package com.database.controller;
 
-import com.shunshun.domain.User;
-import com.shunshun.service.UserService;
+import com.alibaba.fastjson.JSONObject;
+import com.database.domain.User;
+import com.database.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,10 +21,17 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("/getUser")
+    @RequestMapping("/getUser")
+    @ResponseBody
     public String getUser(String userName) {
         User user = userService.getUser(userName);
-        return user.toString();
+        return JSONObject.toJSONString(user);
     }
+    @RequestMapping("/insertUser")
+    public String insertUser(User user) {
+       userService.insertUser(user);
+        return "success";
+    }
+
 
 }
