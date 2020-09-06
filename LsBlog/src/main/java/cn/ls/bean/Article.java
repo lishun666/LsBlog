@@ -11,8 +11,8 @@ public class Article {
     private Integer articleId;
     //文章标题
     private String articlename;
-   /* //图片路径
-    private String imgpath;*/
+    /* //图片路径
+     private String imgpath;*/
     //文章内容
     private String articlecontent;
 

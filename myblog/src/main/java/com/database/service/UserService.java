@@ -10,14 +10,14 @@ import com.database.domain.User;
  */
 public interface UserService {
     /*
-    *
+     *
      * @Author shunshun
      * @Description  获取用户信息系接口
      * @Date 17:35 2020/5/31
      * @Param [userName]
      * @return com.database.domain.User
      **/
-     User getUser(String userName);
+    User getUser(String userName);
 
     Boolean insertUser(User user);
 }

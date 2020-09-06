@@ -21,7 +21,8 @@ import java.util.Map;
 @RequestMapping("articleType")
 public class ArticleTypeController {
     @Autowired
-   ArticleTypeService articleTypeService;
+    ArticleTypeService articleTypeService;
+
     /*
      *
      * @Author chengpunan
@@ -31,11 +32,12 @@ public class ArticleTypeController {
      * @return java.lang.String
      **/
     @RequestMapping("toTable")
-    public String toList(){
+    public String toList() {
         return "typeManage";
     }
+
     /*
-    *
+     *
      * @Author chengpunan
      * @Description //TODO  获得所有文章类型数据
      * @Date 22:50 2019/4/23
@@ -44,14 +46,14 @@ public class ArticleTypeController {
      **/
     @RequestMapping("findAllArticleType")
     @ResponseBody
-    public Map findAllArticleType(){
+    public Map findAllArticleType() {
         Map map = new HashMap();
         List<ArticleType> typeList = articleTypeService.findAllArticleType();
-        map.put("typeList",typeList);
+        map.put("typeList", typeList);
         return map;
     }
     /*
-    *
+     *
      * @Author chengpunan
      * @Description //TODO 添加文章类型的方法
      * @Date 12:18 2019/4/24
@@ -61,19 +63,20 @@ public class ArticleTypeController {
 
     @RequestMapping("addArticleType")
     @ResponseBody
-    public Map addArticleType(String typeName){
+    public Map addArticleType(String typeName) {
         Map map = new HashMap();
         try {
             articleTypeService.addArticleType(typeName);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }
+
     /*
-    *
+     *
      * @Author chengpunan
      * @Description //TODO 修改文章类型
      * @Date 8:46 2019/4/27
@@ -82,17 +85,18 @@ public class ArticleTypeController {
      **/
     @RequestMapping("editArticleType")
     @ResponseBody
-    public Map editArticleType(ArticleType articleType){
+    public Map editArticleType(ArticleType articleType) {
         Map map = new HashMap();
         try {
             articleTypeService.editArticleType(articleType);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }
+
     /*
      *
      * @Author chengpunan
@@ -103,27 +107,28 @@ public class ArticleTypeController {
      **/
     @RequestMapping("deleteArticleTypeByIds")
     @ResponseBody
-    public Map deleteArticleTypeByIds(Integer[] idcard){
+    public Map deleteArticleTypeByIds(Integer[] idcard) {
         Map map = new HashMap();
         try {
             articleTypeService.deleteArticleTypeByIds(idcard);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }
+
     @RequestMapping("deleteOneType")
     @ResponseBody
-    public Map deleteOneType(Integer typeId){
+    public Map deleteOneType(Integer typeId) {
         Map map = new HashMap();
-        try{
+        try {
             articleTypeService.deleteOneType(typeId);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }

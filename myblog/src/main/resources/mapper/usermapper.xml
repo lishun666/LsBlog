@@ -5,12 +5,12 @@
 <mapper namespace="com.database.dao.UserMapper">
 
     <resultMap id="baseResultMap" type="com.database.domain.User">
-        <id column="userid"  property="userId" />
-        <result column="username"  property="userName" />
-        <result column="password" property="passWord" />
+        <id column="userid" property="userId"/>
+        <result column="username" property="userName"/>
+        <result column="password" property="passWord"/>
     </resultMap>
 
-    <select id = "getUser" resultMap = "baseResultMap" >
+    <select id="getUser" resultMap="baseResultMap">
         select * from user where userName = #{userName}
     </select>
 

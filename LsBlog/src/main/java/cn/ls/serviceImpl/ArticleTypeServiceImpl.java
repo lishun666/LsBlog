@@ -19,22 +19,27 @@ import java.util.List;
 public class ArticleTypeServiceImpl implements ArticleTypeService {
     @Autowired
     ArticleTypeDao articleTypeDao;
+
     @Override
     public List<ArticleType> findAllArticleType() {
         List<ArticleType> typeList = articleTypeDao.findAllArticleType();
         return typeList;
     }
-    public void addArticleType(String typeName){
+
+    public void addArticleType(String typeName) {
         articleTypeDao.addArticleType(typeName);
     }
-    public void  editArticleType(ArticleType articleType){
+
+    public void editArticleType(ArticleType articleType) {
         articleTypeDao.editArticleType(articleType);
     }
-    public void deleteArticleTypeByIds(Integer[] idcard){
+
+    public void deleteArticleTypeByIds(Integer[] idcard) {
         articleTypeDao.deleteArticleTypeByIds(idcard);
     }
+
     //删除单个文章类型
-    public void deleteOneType(Integer typeId){
+    public void deleteOneType(Integer typeId) {
         articleTypeDao.deleteOneType(typeId);
     }
 }

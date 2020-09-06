@@ -32,19 +32,21 @@ public class ArticleController {
     private ArticleService articleService;
     @Autowired
     private ArticleTypeService articleTypeService;
+
     /*
-    *
+     *
      * @Description //TODO 去文章管理首页首页的方法
      * @Date 12:49 2019/4/21
      * @Param []
      * @return java.lang.String
      **/
     @RequestMapping("toList")
-    public String toIndexList(){
+    public String toIndexList() {
         return "articleManage";
     }
+
     /*
-    *
+     *
      * @Description //TODO 查询所有文章
      * @Date 14:08 2019/5/14
      * @Param []
@@ -52,32 +54,34 @@ public class ArticleController {
      **/
     @RequestMapping("findAllArticle")
     @ResponseBody
-    public Map findAllArticle(){
+    public Map findAllArticle() {
         Map map = new HashMap();
-        List<Article> articleList =  articleService.findAllArticle();
-        map.put("articleList",articleList);
+        List<Article> articleList = articleService.findAllArticle();
+        map.put("articleList", articleList);
         return map;
     }
+
     /*
-    *
+     *
      * @Description //TODO 去文章详情页面
      * @Date 14:09 2019/5/14
      * @Param [model, articleId]
      * @return java.lang.String
      **/
     @RequestMapping("toDetailsPage")
-    public String toDetailsPage(Model model,String articleId){
+    public String toDetailsPage(Model model, String articleId) {
         List<ArticleType> typeList = articleTypeService.findAllArticleType();
-        model.addAttribute("typeList",typeList);
-        if (articleId != null){
+        model.addAttribute("typeList", typeList);
+        if (articleId != null) {
             Integer id = Integer.parseInt(articleId);
             //Article article = articleService.findArticleById(id);
-            model.addAttribute("articleId",id);
+            model.addAttribute("articleId", id);
         }
         return "details";
     }
+
     /*
-    *
+     *
      * @Description //TODO 添加文章
      * @Date 14:09 2019/5/14
      * @Param [article]
@@ -85,51 +89,53 @@ public class ArticleController {
      **/
     @RequestMapping("addArticle")
     @ResponseBody
-    public Map addAricle(Article article){
+    public Map addAricle(Article article) {
         Map map = new HashMap();
         try {
             articleService.addAricle(article);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }
+
     /*
-    *
+     *
      * @Description //TODO 保存图片
      * @Date 14:09 2019/5/14
      * @Param [request, file]
      * @return java.util.Map
      **/
-    @RequestMapping(value = "uploadImgs",headers = "Accept=application/json",produces ="application/json;charset=UTF-8")
+    @RequestMapping(value = "uploadImgs", headers = "Accept=application/json", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map uploadImgs(HttpServletRequest request, MultipartFile file){
+    public Map uploadImgs(HttpServletRequest request, MultipartFile file) {
         Map map = new HashMap(4);
-        String imgPath =  articleService.saveImg(request,file);
-        if(imgPath != null){
-            map.put("imgPath",imgPath);
-            map.put("status",1);
-        }else {
-            map.put("status",0);
+        String imgPath = articleService.saveImg(request, file);
+        if (imgPath != null) {
+            map.put("imgPath", imgPath);
+            map.put("status", 1);
+        } else {
+            map.put("status", 0);
         }
         return map;
     }
+
     /*
-    *
+     *
      * @Description //TODO 删除图片
      * @Date 14:10 2019/5/14
      * @Param [request, imgSrc]
      * @return java.util.Map
      **/
-    @RequestMapping(value = "deleteImg",headers = "Accept=application/json",produces ="application/json;charset=UTF-8")
+    @RequestMapping(value = "deleteImg", headers = "Accept=application/json", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Map deleteImg(HttpServletRequest request, String imgSrc){
+    public Map deleteImg(HttpServletRequest request, String imgSrc) {
         String[] list = imgSrc.split("upload/");
 
         String url = request.getSession().getServletContext().getRealPath("/upload");
-        File f=new File(url + "/"+list[1]);
+        File f = new File(url + "/" + list[1]);
         try {
             f.delete();
         } catch (Exception e) {
@@ -138,8 +144,9 @@ public class ArticleController {
         return null;
 
     }
+
     /*
-    *
+     *
      * @Description //根据id获取文章
      * @Date 14:07 2019/5/14
      * @Param [articleId]
@@ -147,15 +154,16 @@ public class ArticleController {
      **/
     @RequestMapping("findArticleById")
     @ResponseBody
-    public Map findArticleById(String articleId){
+    public Map findArticleById(String articleId) {
         Map map = new HashMap();
         int id = Integer.parseInt(articleId);
         Article article = articleService.findArticleById(id);
-        map.put("article",article);
+        map.put("article", article);
         return map;
     }
+
     /*
-    *
+     *
      * @Description //TODO 修改文章
      * @Date 15:14 2019/5/14
      * @Param [article]
@@ -163,19 +171,20 @@ public class ArticleController {
      **/
     @RequestMapping("editArticle")
     @ResponseBody
-    public Map editArticleById(Article article){
+    public Map editArticleById(Article article) {
         Map map = new HashMap();
         try {
             articleService.editArticleById(article);
-            map.put("status",1);
-        }catch (Exception e){
+            map.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            map.put("status",0);
+            map.put("status", 0);
         }
         return map;
     }
+
     /*
-    *
+     *
      * @Description //TODO 删除文章方法
      * @Date 13:48 2019/5/20
      * @Param [idcard]
@@ -183,16 +192,17 @@ public class ArticleController {
      **/
     @RequestMapping("deleteArticleByIds")
     @ResponseBody
-    public Map deleteArticleById(Integer[] idcard){
+    public Map deleteArticleById(Integer[] idcard) {
         Map map = new HashMap();
         try {
             articleService.deleteArticleById(idcard);
-            map.put("status",1);
-        }catch (Exception e){
-            map.put("status",1);
+            map.put("status", 1);
+        } catch (Exception e) {
+            map.put("status", 1);
         }
         return map;
     }
+
     /*
      * @Description //TODO 删除单挑文章
      * @Date 14:48 2019/5/20
@@ -201,13 +211,13 @@ public class ArticleController {
      **/
     @RequestMapping("deleteOneArticle")
     @ResponseBody
-    public Map deleteOneArticle(Integer articleId){
+    public Map deleteOneArticle(Integer articleId) {
         Map map = new HashMap();
         try {
             articleService.deleteOneArticle(articleId);
-            map.put("status",1);
-        }catch (Exception e){
-            map.put("status",1);
+            map.put("status", 1);
+        } catch (Exception e) {
+            map.put("status", 1);
         }
         return map;
     }

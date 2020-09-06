@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
-    public User getUser(String userName){
-        return  userMapper.getUser(userName);
+    public User getUser(String userName) {
+        return userMapper.getUser(userName);
     }
 
     @Override
     public Boolean insertUser(User user) {
-        return  userMapper.insertUser(user) > 0;
+        return userMapper.insertUser(user) > 0;
     }
 }

@@ -9,8 +9,8 @@
 	3，返回值类型及参数类型与mapper文件中的类型一致
  -->
 <mapper namespace="cn.ls.dao.ArticleDao">
-   <resultMap type="Article" id="articleResultMap">
-        <id property="articleId" column="article_id" />
+    <resultMap type="Article" id="articleResultMap">
+        <id property="articleId" column="article_id"/>
         <result property="articlename" column="article_name"/>
         <result property="articlecontent" column="articlecontent"/>
         <association property="articleType" javaType="ArticleType">
@@ -19,40 +19,40 @@
         </association>
     </resultMap>
 
-    <select id="findAllArticle" resultMap="articleResultMap" >
-		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
-		FROM article a LEFT JOIN articletype ar
-		ON a.type_id=ar.type_id
-	</select>
+    <select id="findAllArticle" resultMap="articleResultMap">
+        SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+        FROM article a LEFT JOIN articletype ar
+        ON a.type_id=ar.type_id
+    </select>
 
-    <select id="queryAllArticleByTypeId" resultMap="articleResultMap"  parameterType="Integer">
-		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
-		FROM article a LEFT JOIN articletype ar
-		ON a.type_id=ar.type_id
-		Where ar.type_id=#{id}
-	</select>
+    <select id="queryAllArticleByTypeId" resultMap="articleResultMap" parameterType="Integer">
+        SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+        FROM article a LEFT JOIN articletype ar
+        ON a.type_id=ar.type_id
+        Where ar.type_id=#{id}
+    </select>
 
     <select id="queryArticleById" resultMap="articleResultMap" parameterType="Integer">
-		SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
-		FROM article a LEFT JOIN articletype ar
-		ON a.type_id=ar.type_id
-		Where a.article_id=#{id}
-	</select>
-	<insert id="addAricle" parameterType="cn.ls.bean.Article">
-		INSERT INTO article(article_name,articlecontent,type_id)
-		VALUES (
-			#{articlename},#{articlecontent},#{typeId}
-		)
-	</insert>
+        SELECT a.articlecontent,a.article_name,a.article_id,ar.type_id,ar.type_name
+        FROM article a LEFT JOIN articletype ar
+        ON a.type_id=ar.type_id
+        Where a.article_id=#{id}
+    </select>
+    <insert id="addAricle" parameterType="cn.ls.bean.Article">
+        INSERT INTO article(article_name,articlecontent,type_id)
+        VALUES (
+        #{articlename},#{articlecontent},#{typeId}
+        )
+    </insert>
 
 
-	<select id="findArticleById" parameterType="Integer" resultMap="articleResultMap">
-		SELECT *
-		FROM article
-		WHERE article_id = #{articleId}
-	</select>
+    <select id="findArticleById" parameterType="Integer" resultMap="articleResultMap">
+        SELECT *
+        FROM article
+        WHERE article_id = #{articleId}
+    </select>
 
-	<update id="editArticleById" parameterType="cn.ls.bean.Article">
+    <update id="editArticleById" parameterType="cn.ls.bean.Article">
         UPDATE article
         SET article_name=#{articlename},articlecontent = #{articlecontent},type_id=#{typeId}
         WHERE article_id=#{articleId}

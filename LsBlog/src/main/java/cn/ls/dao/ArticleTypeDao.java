@@ -13,12 +13,16 @@ import java.util.List;
 public interface ArticleTypeDao {
     //查询所有文章类型
     public List<ArticleType> findAllArticleType();
+
     //添加文章类型
     public void addArticleType(String typeName);
+
     //修改文章类型
     public void editArticleType(ArticleType articleType);
+
     //删除文章类型
     public void deleteArticleTypeByIds(Integer[] idcard);
+
     //删除单个文章类型
     public void deleteOneType(Integer typeId);
 }

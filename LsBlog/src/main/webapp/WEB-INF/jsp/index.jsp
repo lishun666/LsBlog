@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"  pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="/static/my/taglibs.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -31,7 +31,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="${_ctx}/static/img/profile_small.jpg" /></span>
+                        <span><img alt="image" class="img-circle" src="${_ctx}/static/img/profile_small.jpg"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">admin</strong></span>
@@ -56,7 +56,8 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="${pageContext.request.contextPath}/articleType/toTable">文章类型管理</a>
+                            <a class="J_menuItem"
+                               href="${pageContext.request.contextPath}/articleType/toTable">文章类型管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="${pageContext.request.contextPath}/article/toList">文章管理</a>
@@ -96,17 +97,19 @@
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="row border-bottom">
             <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0 ;background:#345f73">
-                <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                        class="fa fa-bars"></i> </a>
                     <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
                         <div class="form-group">
-                            <input type="text" style=" color:#FFF; font-size:20px" value="后台管理系统" class="form-control" disabled="disabled" name="top-search" id="top-search">
+                            <input type="text" style=" color:#FFF; font-size:20px" value="后台管理系统" class="form-control"
+                                   disabled="disabled" name="top-search" id="top-search">
 
                         </div>
                     </form>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown hidden-xs">
-                        <a  href="login.html" class="right-sidebar-toggle" aria-expanded="false">
+                        <a href="login.html" class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa fa-sign-out"></i>安全退出
                         </a>
                     </li>
@@ -137,10 +140,12 @@
                     </li>
                 </ul>
             </div>
-            <a href="#" class="roll-nav roll-right J_tabExit" id="alarm-fullscreen-toggler"><i class="fa fa-arrows-alt"></i> 全屏</a>
+            <a href="#" class="roll-nav roll-right J_tabExit" id="alarm-fullscreen-toggler"><i
+                    class="fa fa-arrows-alt"></i> 全屏</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v3.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v3.html?v=4.0" frameborder="0"
+                    data-id="index_v1.html" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">&copy; 2019 <a href="#" target="_blank">西安捷天信息科技有限公司</a>

@@ -4,17 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.ls.dao.ArticleTypeDao">
     <resultMap id="articleType" type="cn.ls.bean.ArticleType">
-        <id column="type_id" property="typeId" />
+        <id column="type_id" property="typeId"/>
         <result property="typeName" column="type_name"/>
     </resultMap>
-    <select id="findAllArticleType"  resultMap="articleType">
+    <select id="findAllArticleType" resultMap="articleType">
         SELECT *
         FROM articletype
     </select>
-    <insert id="addArticleType" parameterType="String" statementType="PREPARED" keyProperty="id" useGeneratedKeys = "true">
+    <insert id="addArticleType" parameterType="String" statementType="PREPARED" keyProperty="id"
+            useGeneratedKeys="true">
         INSERT INTO articletype(type_name)
         VALUES (
-            #{typeName}
+        #{typeName}
         )
     </insert>
     <update id="editArticleType" parameterType="cn.ls.bean.ArticleType">
@@ -36,11 +37,11 @@
         from articletype
         where type_id = #{typeID}
     </delete>
-<!--    <select id="findArticleTypeById" parameterType="Integer" resultMap="articleType">
-        select *
-        from articletype
-        <where>
-            type_id=#{typeId};
-        </where>
-    </select>-->
+    <!--    <select id="findArticleTypeById" parameterType="Integer" resultMap="articleType">
+            select *
+            from articletype
+            <where>
+                type_id=#{typeId};
+            </where>
+        </select>-->
 </mapper>

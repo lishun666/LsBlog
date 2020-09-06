@@ -36,10 +36,11 @@
                         <h4 class="example-title">文章管理</h4>
                         <div class="example">
                             <div class="btn-group hidden-xs" id="exampleToolbar" role="group">
-                                <button type="button" class="btn btn-outline btn-default"  id="addButton">
+                                <button type="button" class="btn btn-outline btn-default" id="addButton">
                                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                                 </button>
-                                <button type="button" class="btn btn-outline btn-default" data-toggle="modal" id="deleteButton" >
+                                <button type="button" class="btn btn-outline btn-default" data-toggle="modal"
+                                        id="deleteButton">
                                     <i class="glyphicon glyphicon-trash " aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -52,8 +53,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!-- 全局js -->
@@ -79,12 +78,11 @@
 <!--统计代码，可删除-->
 
 <script>
-    $(function(){
+    $(function () {
         //初始化Table
         var oTable = new TableInit();
         oTable.Init();
     })
-
 
 
     var TableInit = function () {
@@ -93,19 +91,19 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#articleTableToolbar').bootstrapTable({
-                url:'${_ctx}/article/findAllArticle',         //请求后台的URL（*）
+                url: '${_ctx}/article/findAllArticle',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 toolbar: '#exampleTableEventsToolbar',                //工具按钮用哪个容器
                 striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
                 sortable: true,                     //是否启用排序
-                sortName:"id",
+                sortName: "id",
                 sortOrder: "desc",                   //排序方式
                 queryParams: oTableInit.queryParams,//传递参数（*）
                 queryParamsType: 'limit',
                 sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
-                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
                 pageSize: 5,                       //每页的记录行数（*）
                 pageList: [10, 15, 20, 50],        //可供选择的每页的行数（*）
                 search: true,                       //是否显示表格搜索
@@ -116,17 +114,17 @@
                 clickToSelect: true,                //是否启用点击选中行
                 //height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
                 iconSize: 'outline',
                 contentType: "application/x-www-form-urlencoded", //解决POST提交问题
                 showExport: true,                     //是否显示导出
-                buttonsAlign:"right",  //按钮位置
+                buttonsAlign: "right",  //按钮位置
                 exportDataType: "selected",              //basic', 'all', 'selected'.
-                exportTypes:['excel','txt','json', 'xml'],  //导出文件类型   //'json', 'xml', 'csv', 'txt', 'sql', 'excel'
-                Icons:'glyphicon-export',
-                responseHandler:function(res) {
+                exportTypes: ['excel', 'txt', 'json', 'xml'],  //导出文件类型   //'json', 'xml', 'csv', 'txt', 'sql', 'excel'
+                Icons: 'glyphicon-export',
+                responseHandler: function (res) {
                     return {
                         "rows": res.articleList   //数据
                     };
@@ -137,50 +135,55 @@
                     columns: 'glyphicon-list'
                 },
                 columns: [
-                    {checkbox: true },
-                    {title:'文章编号',field: 'articleId',sortable:true ,align:"center" },
+                    {checkbox: true},
+                    {title: '文章编号', field: 'articleId', sortable: true, align: "center"},
 
-                    {title:'文章名字',align:"center",align:"center",field: 'articlename'},
-                    {title:'文章类型',align:"center",align:"center",field: 'articleType.typeName'},
-                    {title:'是否显示',type:"checkbox",class:"js-switch" },
-                    {title:'操作',field:"Button",align:"center",formatter:buttonFormatter,
+                    {title: '文章名字', align: "center", align: "center", field: 'articlename'},
+                    {title: '文章类型', align: "center", align: "center", field: 'articleType.typeName'},
+                    {title: '是否显示', type: "checkbox", class: "js-switch"},
+                    {
+                        title: '操作', field: "Button", align: "center", formatter: buttonFormatter,
                     }
                 ],
             });
         };
-                //得到查询的参数
-                oTableInit.queryParams = function (params) {
-                    var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                        pageSize: params.limit,   //页面大小
-                        pageNumber:params.pageNumber, //页码
-                        sortName: params.sort,	//排序列名
-                        sortOrder:params.order,	//排序方式
-                        searchText:params.search//搜索框参数
-                    };
-                    return temp;
-                };
-                return oTableInit;
+        //得到查询的参数
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                pageSize: params.limit,   //页面大小
+                pageNumber: params.pageNumber, //页码
+                sortName: params.sort,	//排序列名
+                sortOrder: params.order,	//排序方式
+                searchText: params.search//搜索框参数
+            };
+            return temp;
+        };
+        return oTableInit;
     }
+
     //按钮初始化
-    function buttonFormatter(value,row) {
-        
-            var id = value;
-            var result = "";
-            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.articleId +"')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteOneArticle('" + row.articleId + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
-            return result;
+    function buttonFormatter(value, row) {
+
+        var id = value;
+        var result = "";
+        result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditTypeById('" + row.articleId + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+        result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteOneArticle('" + row.articleId + "')\" title='删除'>" + "<span class='glyphicon glyphicon-remove'></span></a>";
+        return result;
     }
+
     //新增类型
     $("#addButton").click(function () {
         $(location).attr('href', '${_ctx}/article/toDetailsPage');
     })
+
     //修改类型
-    function EditTypeById(articleId){
-        $(location).attr('href', '${_ctx}/article/toDetailsPage?articleId='+articleId);
+    function EditTypeById(articleId) {
+        $(location).attr('href', '${_ctx}/article/toDetailsPage?articleId=' + articleId);
     }
+
     //删除类型
-    $("#deleteButton").on("click",function () {
-    //$('#deleteButton').click(function () {
+    $("#deleteButton").on("click", function () {
+        //$('#deleteButton').click(function () {
         swal({
             title: "您确定要删除这条信息吗",
             text: "删除后将无法恢复，请谨慎操作！",
@@ -195,30 +198,32 @@
         });
 
     })
+
     function deleteAritlce() {
         var rows = $("#articleTableToolbar").bootstrapTable('getSelections');
         if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
             alert("请先选择要删除的记录!");
             return;
-        }else {
+        } else {
             var arrays = new Array();// 声明一个数组
             $(rows).each(function () {// 通过获得别选中的来进行遍历
                 arrays.push(this.articleId);// cid为获得到的整条数据中的一列
             });
             var idcard = arrays.join(','); // 获得要删除的id
             $.ajax({
-                type:"post",
+                type: "post",
                 url: "${_ctx}/article/deleteArticleByIds",
-                data:{"idcard":idcard},
-                success:function(data){
-                    if(data.status == 1){
+                data: {"idcard": idcard},
+                success: function (data) {
+                    if (data.status == 1) {
                         $('#articleTableToolbar').bootstrapTable(('refresh'));
-                    }else alert("请求失败")
+                    } else alert("请求失败")
 
                 }
             })
         }
     }
+
     //删除单篇文章
     function DeleteOneArticle(articleId) {
         swal({
@@ -234,15 +239,16 @@
             swal("删除成功！", "您已经永久删除了这条信息。", "success");
         });
     }
+
     function deleteOne(articleId) {
         $.ajax({
-            data:{'articleId':articleId},
-            type:'post',
-            url:"${_ctx}/article/deleteOneArticle",
-            success:function(data){
-                if(data.status == 1){
+            data: {'articleId': articleId},
+            type: 'post',
+            url: "${_ctx}/article/deleteOneArticle",
+            success: function (data) {
+                if (data.status == 1) {
                     $('#articleTableToolbar').bootstrapTable(('refresh'));
-                }else alert("请求失败")
+                } else alert("请求失败")
             }
         })
     }

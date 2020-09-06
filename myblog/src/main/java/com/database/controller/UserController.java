@@ -27,9 +27,10 @@ public class UserController {
         User user = userService.getUser(userName);
         return JSONObject.toJSONString(user);
     }
+
     @RequestMapping("/insertUser")
     public String insertUser(User user) {
-       userService.insertUser(user);
+        userService.insertUser(user);
         return "success";
     }
 
